@@ -1,0 +1,245 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+
+<div class="login-page">
+    <div class="login-card">
+
+        <div class="login-header">
+            <i class="fas fa-film"></i>
+            <h2>Welcome Back</h2>
+            <p>Login to book your favourite movies</p>
+        </div>
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    {{ form.username }}
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label>Password</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+
+                    {{ form.password }}
+
+                    <button class="btn btn-light" type="button" id="togglePassword">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-end mt-2">
+                <a href="{% url 'password_reset' %}" class="forgot-link">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button type="submit" class="login-btn mt-4">
+                <i class="fas fa-sign-in-alt"></i>
+                Login
+            </button>
+
+        </form>
+
+        <div class="signup-text">
+            Don't have an account?
+            <a href="{% url 'register' %}">Create Account</a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    min-height:100vh;
+}
+
+.login-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:90vh;
+}
+
+.login-card{
+
+    width:430px;
+    padding:40px;
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+
+    animation:fadeIn .8s ease;
+}
+
+.login-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.login-header i{
+
+    font-size:55px;
+    color:#FFD700;
+    margin-bottom:15px;
+}
+
+.login-header h2{
+
+    color:white;
+    font-weight:700;
+}
+
+.login-header p{
+
+    color:#f2f2f2;
+    font-size:15px;
+}
+
+.form-group label{
+
+    color:white;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.input-group-text{
+
+    border:none;
+    background:#fff;
+}
+
+.form-control{
+
+    border:none;
+    height:48px;
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+}
+
+.login-btn{
+
+    width:100%;
+    border:none;
+
+    padding:13px;
+
+    border-radius:30px;
+
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(255,81,47,.4);
+}
+
+.forgot-link{
+
+    color:#ffe082;
+    text-decoration:none;
+}
+
+.forgot-link:hover{
+
+    color:white;
+}
+
+.signup-text{
+
+    text-align:center;
+    color:white;
+
+    margin-top:25px;
+}
+
+.signup-text a{
+
+    color:#FFD700;
+
+    font-weight:bold;
+
+    text-decoration:none;
+}
+
+.signup-text a:hover{
+
+    color:white;
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+
+}
+
+</style>
+
+<script>
+
+const togglePassword=document.querySelector("#togglePassword");
+const password=document.querySelector("input[type=password]");
+const toggleIcon=document.querySelector("#toggleIcon");
+
+togglePassword.addEventListener("click",function(){
+
+if(password.type==="password"){
+
+password.type="text";
+toggleIcon.classList.replace("fa-eye","fa-eye-slash");
+
+}else{
+
+password.type="password";
+toggleIcon.classList.replace("fa-eye-slash","fa-eye");
+}
+
+});
+
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,147 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+
+<div class="logout-page">
+    <div class="logout-card">
+
+        <div class="logout-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <h2>Logged Out Successfully!</h2>
+
+        <p>
+            Thank you for visiting <strong>MovieVerse</strong>.
+            We hope to see you again soon!
+        </p>
+
+        <div class="button-group">
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i>
+                Login Again
+            </a>
+
+            <a href="/" class="btn btn-outline-light btn-lg mt-3">
+                <i class="fas fa-home me-2"></i>
+                Back to Home
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    min-height:100vh;
+}
+
+.logout-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:90vh;
+}
+
+.logout-card{
+
+    width:500px;
+
+    text-align:center;
+
+    padding:45px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+
+    animation:fadeIn .8s ease;
+}
+
+.logout-icon{
+
+    font-size:70px;
+
+    color:#4CAF50;
+
+    margin-bottom:20px;
+}
+
+.logout-card h2{
+
+    color:white;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+}
+
+.logout-card p{
+
+    color:#f2f2f2;
+
+    font-size:17px;
+
+    margin-bottom:30px;
+}
+
+.btn-primary{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(255,81,47,.4);
+}
+
+.btn-outline-light{
+
+    width:100%;
+
+    border-radius:30px;
+}
+
+.btn-outline-light:hover{
+
+    background:white;
+
+    color:#1d2671;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,551 @@
+{% extends "users/basic.html" %}
+
+{% block content %}
+<div class="profile-page py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- Left Profile Card -->
+            <div class="col-lg-4">
+
+                <div class="card profile-card shadow-lg">
+
+                    <div class="card-body text-center">
+
+                        <div class="profile-avatar">
+                            {{ user.username|first|upper }}
+                        </div>
+
+                        <h3 class="mt-4">{{ user.username }}</h3>
+
+                        <p class="text-light">
+                            <i class="fas fa-envelope"></i>
+                            {{ user.email }}
+                        </p>
+
+                        <hr>
+
+                        <div class="row text-center">
+
+                            <div class="col-4">
+                                <h4>{{ bookings|length }}</h4>
+                                <small>Bookings</small>
+                            </div>
+
+                            <div class="col-4">
+                                <h4>⭐</h4>
+                                <small>Member</small>
+                            </div>
+
+                            <div class="col-4">
+                                <h4>100%</h4>
+                                <small>Active</small>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <a href="{% url 'password_reset' %}" class="btn btn-warning w-100 mb-3">
+                            <i class="fas fa-key"></i>
+                            Reset Password
+                        </a>
+
+                        <a href="{% url 'logout' %}" class="btn btn-outline-light w-100">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-8">
+
+                <!-- Update Profile -->
+
+                <div class="card shadow-lg mb-4 glass-card">
+
+                    <div class="card-header">
+
+                        <h3>
+
+                            <i class="fas fa-user-edit"></i>
+
+                            Update Profile
+
+                        </h3>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <form method="POST">
+
+                            {% csrf_token %}
+
+                            {% for field in u_form %}
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+
+                                    {{ field.label }}
+
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.errors %}
+                                <div class="text-danger">
+
+                                    {{ field.errors }}
+
+                                </div>
+                                {% endif %}
+
+                            </div>
+
+                            {% endfor %}
+
+                            <button class="btn btn-save">
+
+                                <i class="fas fa-save"></i>
+
+                                Save Changes
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <!-- Booking History -->
+
+                <div class="card shadow-lg glass-card">
+
+                    <div class="card-header">
+
+                        <h3>
+
+                            <i class="fas fa-ticket-alt"></i>
+
+                            Booking History
+
+                        </h3>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        {% if bookings %}
+
+                        <div class="row">
+
+                            {% for booking in bookings %}
+
+                            <div class="col-md-6 mb-4">
+
+                                <div class="booking-card">
+
+                                    <div class="movie-icon">
+
+                                        🎬
+
+                                    </div>
+
+                                    <h4>{{ booking.movie.name }}</h4>
+
+                                    <p>
+
+                                        <strong>Theatre</strong>
+
+                                        <br>
+
+                                        {{ booking.theater.name }}
+
+                                    </p>
+
+                                    <p>
+
+                                        <strong>Seat</strong>
+
+                                        <span class="badge bg-warning text-dark">
+
+                                            {{ booking.seat.seat_number }}
+
+                                        </span>
+
+                                    </p>
+
+                                    <p>
+
+                                        <strong>Date</strong>
+
+                                        <br>
+
+                                        {{ booking.booked_at|date:"d M Y, h:i A" }}
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        {% else %}
+
+                        <div class="empty-booking text-center">
+
+                            <i class="fas fa-film fa-5x mb-4"></i>
+
+                            <h3>No Bookings Yet</h3>
+
+                            <p>
+
+                                Book your favourite movie and enjoy your show.
+
+                            </p>
+
+                            <a href="/" class="btn btn-warning">
+
+                                Browse Movies
+
+                            </a>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    min-height:100vh;
+}
+
+.profile-card,
+.glass-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:22px;
+
+    color:white;
+
+    transition:.4s;
+}
+
+.profile-card:hover,
+.glass-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+.card-header{
+
+    background:transparent;
+
+    border:none;
+
+    padding:25px;
+}
+
+.card-header h3{
+
+    color:white;
+
+    font-weight:700;
+
+    margin:0;
+}
+
+.card-body{
+
+    padding:30px;
+}
+
+.profile-avatar{
+
+    width:140px;
+
+    height:140px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#ff512f,#dd2476);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:55px;
+
+    color:white;
+
+    font-weight:bold;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.profile-card h3{
+
+    color:white;
+
+    font-weight:700;
+}
+
+.profile-card small{
+
+    color:#ddd;
+}
+
+.profile-card hr{
+
+    border-color:rgba(255,255,255,.15);
+}
+
+.form-label{
+
+    color:white;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+}
+
+form input,
+form textarea,
+form select{
+
+    width:100%;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    color:white;
+
+    border-radius:12px;
+
+    padding:12px 15px;
+}
+
+form input::placeholder{
+
+    color:#ddd;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus{
+
+    background:rgba(255,255,255,.18);
+
+    color:white;
+
+    border-color:#ff9800;
+
+    outline:none;
+
+    box-shadow:none;
+}
+
+.btn-save{
+
+    width:100%;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:30px;
+
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.btn-save:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(255,81,47,.4);
+}
+
+.booking-card{
+
+    background:rgba(255,255,255,.10);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    color:white;
+
+    transition:.3s;
+
+    height:100%;
+}
+
+.booking-card:hover{
+
+    transform:scale(1.03);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+
+.booking-card h4{
+
+    font-weight:700;
+
+    margin-top:15px;
+}
+
+.movie-icon{
+
+    font-size:45px;
+
+    text-align:center;
+}
+
+.empty-booking{
+
+    color:white;
+
+    padding:50px 20px;
+}
+
+.empty-booking i{
+
+    color:#ffc107;
+}
+
+.btn-warning{
+
+    border-radius:30px;
+
+    padding:12px 30px;
+
+    font-weight:bold;
+}
+
+.btn-outline-light{
+
+    border-radius:30px;
+}
+
+.badge{
+
+    font-size:15px;
+
+    padding:8px 12px;
+
+    border-radius:20px;
+}
+
+@media(max-width:991px){
+
+.profile-avatar{
+
+width:120px;
+
+height:120px;
+
+font-size:45px;
+
+}
+
+.card-body{
+
+padding:20px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.profile-card,
+.glass-card{
+
+border-radius:15px;
+
+}
+
+.booking-card{
+
+padding:20px;
+
+}
+
+}
+
+</style>
+<!-- <div class="container mt-4">
+    <h2>Profile</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ u_form.as_p }}
+      <div>
+        <button class="btn btn-primary mt-2" type="submit">Update Profile</button>
+      </div>
+    </form>
+   
+    <p>Want to change your password? <a href="{% url 'password_reset' %}">Reset it here</a>.</p>
+
+    <h2>Booking</h2>
+    <ul>
+      {% for booking in bookings %}
+      <li>
+        movie:{{booking.movie.name}}<br>
+        theater:{{booking.theater.name}}<br>
+        seat:{{booking.seat.seat_number}}<br>
+        bookedat:{{booking.booked_at}}
+
+      </li>
+      {% empty %}
+      <li>no bookings yet</li>
+      {% endfor %}
+    </ul>
+  </div> -->
+{% endblock %}
