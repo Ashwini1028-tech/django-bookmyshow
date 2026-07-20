@@ -99,7 +99,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 DATABASES['default'] = dj_database_url.parse(
-    os.environ.get('postgresql://django_bookmyshow_gwcd_user:Jr7gU2yl5ivnXH8gwXE8myqk0zFBPApi@dpg-d9et3lbtqb8s73b5k6g0-a.oregon-postgres.render.com/django_bookmyshow_gwcd')
+    os.environ.get('DATABASE_URL')
 )
 AUTH_PASSWORD_VALIDATORS = [
     {
