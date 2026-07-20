@@ -24,11 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-c8aetlj(=vp90n@#yoc^&d(_6ivp(d!bv-4-f!r$lawptjzrwu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    '.vercel.app',
+    '.onrender.com',
 ]
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,12 +93,14 @@ DATABASES = {
     }
 }
 #postgresql://django_bookmyshow_gwcd_user:Jr7gU2yl5ivnXH8gwXE8myqk0zFBPApi@dpg-d9et3lbtqb8s73b5k6g0-a.oregon-postgres.render.com/django_bookmyshow_gwcd
-DATABASES['default'] = dj_database_url.parse('postgresql://django_bookmyshow_gwcd_user:Jr7gU2yl5ivnXH8gwXE8myqk0zFBPApi@dpg-d9et3lbtqb8s73b5k6g0-a.oregon-postgres.render.com/django_bookmyshow_gwcd')
+#DATABASES['default'] = dj_database_url.parse('postgresql://django_bookmyshow_gwcd_user:Jr7gU2yl5ivnXH8gwXE8myqk0zFBPApi@dpg-d9et3lbtqb8s73b5k6g0-a.oregon-postgres.render.com/django_bookmyshow_gwcd')
 # 
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+DATABASES['default'] = dj_database_url.parse(
+    os.environ.get('postgresql://django_bookmyshow_gwcd_user:Jr7gU2yl5ivnXH8gwXE8myqk0zFBPApi@dpg-d9et3lbtqb8s73b5k6g0-a.oregon-postgres.render.com/django_bookmyshow_gwcd')
+)
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -129,7 +132,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
